@@ -52,3 +52,5 @@ plt.ylabel("Magnitud")
 
 plt.tight_layout()
 plt.show()
+
+# tecnicamente lo que hace es cargar un archivo, calcula la fft y mustra su señal en el tiempo y su espectro de frecuencias
