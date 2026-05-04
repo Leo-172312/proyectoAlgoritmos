@@ -1,0 +1,66 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.io import wavfile
+from tkinter import Tk, filedialog
+
+# === FUNCION FFT ===
+def calcular_fft(signal, fs):
+    N = len(signal)
+    fft = np.fft.fft(signal)
+    frecuencias = np.fft.fftfreq(N, 1/fs)
+
+    # Solo frecuencias positivas
+    mask = frecuencias >= 0
+    return frecuencias[mask], np.abs(fft[mask])
+
+# === SELECCIONAR ARCHIVO ===
+def cargar_audio():
+    Tk().withdraw()
+    archivo = filedialog.askopenfilename(
+        title="Selecciona un archivo WAV",
+        filetypes=[("Archivos WAV", "*.wav")]
+    )
+    return archivo
+
+# === MAIN ===
+archivo = cargar_audio()
+
+if archivo:
+    fs, signal = wavfile.read(archivo)
+
+    # Si es estéreo, convertir a mono
+    if len(signal.shape) == 2:
+        signal = signal[:, 0]
+
+    # Normalizar señal
+    signal = signal / np.max(np.abs(signal))
+
+    # Calcular FFT
+    freqs, magnitud = calcular_fft(signal, fs)
+
+    # Tiempo
+    tiempo = np.linspace(0, len(signal)/fs, len(signal))
+
+    # === GRAFICAS ===
+    plt.figure(figsize=(12, 6))
+
+    # Señal en el tiempo
+    plt.subplot(2, 1, 1)
+    plt.plot(tiempo, signal)
+    plt.title("Señal en el tiempo")
+    plt.xlabel("Tiempo (s)")
+    plt.ylabel("Amplitud")
+
+    # FFT
+    plt.subplot(2, 1, 2)
+    plt.plot(freqs, magnitud)
+    plt.title("Espectro de frecuencias (FFT)")
+    plt.xlabel("Frecuencia (Hz)")
+    plt.ylabel("Magnitud")
+    plt.xlim(0, fs/2)
+
+    plt.tight_layout()
+    plt.show()
+
+else:
+    print("No se seleccionó ningún archivo.")
