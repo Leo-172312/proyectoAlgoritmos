@@ -1,0 +1,33 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Frecuencia de muestreo (Hz)
+fs = 1000  
+t = np.linspace(0, 1, fs)
+
+# Crear señal de prueba (suma de frecuencias)
+f1 = 50   # Hz
+f2 = 120  # Hz
+
+signal = np.sin(2 * np.pi * f1 * t) + 0.5 * np.sin(2 * np.pi * f2 * t)
+
+# Aplicar FFT
+fft_result = np.fft.fft(signal)
+frequencies = np.fft.fftfreq(len(signal), 1/fs)
+
+# Solo tomar la mitad positiva
+positive_freqs = frequencies[:len(frequencies)//2]
+magnitude = np.abs(fft_result[:len(fft_result)//2])
+
+# Graficar
+plt.figure(figsize=(10,5))
+plt.plot(positive_freqs, magnitude)
+plt.title("Análisis de Frecuencia (FFT)")
+plt.xlabel("Frecuencia (Hz)")
+plt.ylabel("Magnitud")
+plt.grid()
+plt.show() 
+
+
+
+Este codigo lo saque de internet y es ejemplo de como se usa el FFT
