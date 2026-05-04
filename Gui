@@ -1,0 +1,40 @@
+import tkinter as tk
+from tkinter import filedialog, messagebox
+from scipy.io import wavfile
+
+def seleccionar_archivo():
+    archivo = filedialog.askopenfilename(
+        title="Selecciona un archivo WAV",
+        filetypes=[("Archivos WAV", "*.wav")]
+    )
+    
+    if archivo:
+        try:
+            fs, signal = wavfile.read(archivo)
+            messagebox.showinfo("Éxito", "Archivo cargado correctamente")
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+
+ventana = tk.Tk()
+ventana.title("Selector de Audio")
+ventana.geometry("500x300")  # Tamaño más grande
+
+# Texto superior
+label = tk.Label(
+    ventana, 
+    text="Seleccionar archivo de audio", 
+    font=("Arial", 16)
+)
+label.pack(pady=30)
+
+# Botón
+btn = tk.Button(
+    ventana, 
+    text="Buscar archivo", 
+    command=seleccionar_archivo,
+    width=20,
+    height=2
+)
+btn.pack()
+
+ventana.mainloop()
