@@ -1,4 +1,4 @@
-﻿import os
+import os
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
@@ -389,7 +389,7 @@ class ComparadorCalidadAudio:
             figure.clear()
             axis = figure.add_subplot(111)
             self.aplicar_estilo_eje(axis)
-            axis.text(0.5, 0.5, "Carga archivos WAV para visualizar el analisis", ha="center", va="center", color=TEXTO_SECUNDARIO)
+            axis.TEXTO(0.5, 0.5, "Carga archivos WAV para visualizar el analisis", ha="center", va="center", color=TEXTO_SECUNDARIO)
             axis.set_xticks([])
             axis.set_yticks([])
             figure.tight_layout()
@@ -408,7 +408,7 @@ class ComparadorCalidadAudio:
         self.aplicar_estilo_eje(axis)
         axis.set_title(title, color=TEXTO, fontsize=12, loc="left")
         if audio is None:
-            axis.text(0.5, 0.5, "Sin audio cargado", ha="center", va="center", color=TEXTO_SECUNDARIO, transform=axis.transAxes)
+            axis.TEXTO(0.5, 0.5, "Sin audio cargado", ha="center", va="center", color=TEXTO_SECUNDARIO, transform=axis.transAxes)
             return
         data = audio["data"]
         time = np.linspace(0, audio["duration"], len(data))
@@ -486,7 +486,7 @@ class ComparadorCalidadAudio:
         if self.analysis is None:
             axis = figure.add_subplot(111)
             self.aplicar_estilo_eje(axis)
-            axis.text(0.5, 0.5, "Ejecuta la comparacion para ver resultados", ha="center", va="center", color=TEXTO_SECUNDARIO)
+            axis.TEXTO(0.5, 0.5, "Ejecuta la comparacion para ver resultados", ha="center", va="center", color=TEXTO_SECUNDARIO)
             self.canvases["comparison"].draw()
             return
 
@@ -588,7 +588,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
 
 
